@@ -1,20 +1,20 @@
 ---
-- name: Check if ufw package is installed (on Ubuntu).
+- name: Check if ufw package is installed (on Debian).
   command: service ufw status
   register: ufw_installed
   ignore_errors: true
   changed_when: false
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
     - firewall_disable_ufw
   check_mode: false
 
-- name: Disable the ufw firewall (on Ubuntu, if configured).
+- name: Disable the ufw firewall (on Debian, if configured).
   service:
     name: ufw
     state: stopped
     enabled: false
   when:
-    - ansible_distribution == "Ubuntu"
+    - ansible_distribution == "Debian"
     - firewall_disable_ufw
     - ufw_installed.rc == 0
